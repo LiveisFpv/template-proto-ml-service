@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package template;
+
+option go_package = "github.com/LiveisFpv/template-proto-ml-service/gen/go/proto/template;template";
+
+service MLService{
+    rpc Search (SearchRequest) returns (SearchResponse);
+}
+
+message SearchRequest{
+    string Prompt = 1;
+    int32 Value = 2;
+}
+
+message SearchResponse{
+    string Response = 1;
+}
