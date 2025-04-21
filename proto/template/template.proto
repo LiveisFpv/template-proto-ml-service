@@ -5,14 +5,15 @@ package template;
 option go_package = "github.com/LiveisFpv/template-proto-ml-service/gen/go/proto/template;template";
 
 service MLService{
-    rpc Search (SearchRequest) returns (SearchResponse);
+    rpc GPT (GPTRequest) returns (GPTResponse);
 }
 
-message SearchRequest{
+message GPTRequest{
     string Prompt = 1;
-    int32 Value = 2;
+    string Question = 2;
+    int32 Max_token = 3;
 }
 
-message SearchResponse{
-    string Response = 1;
+message GPTResponse{
+    string Answer = 1;
 }

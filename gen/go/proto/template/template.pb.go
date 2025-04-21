@@ -21,28 +21,29 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type SearchRequest struct {
+type GPTRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Prompt        string                 `protobuf:"bytes,1,opt,name=Prompt,proto3" json:"Prompt,omitempty"`
-	Value         int32                  `protobuf:"varint,2,opt,name=Value,proto3" json:"Value,omitempty"`
+	Question      string                 `protobuf:"bytes,2,opt,name=Question,proto3" json:"Question,omitempty"`
+	MaxToken      int32                  `protobuf:"varint,3,opt,name=Max_token,json=MaxToken,proto3" json:"Max_token,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SearchRequest) Reset() {
-	*x = SearchRequest{}
+func (x *GPTRequest) Reset() {
+	*x = GPTRequest{}
 	mi := &file_proto_template_template_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SearchRequest) String() string {
+func (x *GPTRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SearchRequest) ProtoMessage() {}
+func (*GPTRequest) ProtoMessage() {}
 
-func (x *SearchRequest) ProtoReflect() protoreflect.Message {
+func (x *GPTRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_template_template_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -54,46 +55,53 @@ func (x *SearchRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SearchRequest.ProtoReflect.Descriptor instead.
-func (*SearchRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use GPTRequest.ProtoReflect.Descriptor instead.
+func (*GPTRequest) Descriptor() ([]byte, []int) {
 	return file_proto_template_template_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *SearchRequest) GetPrompt() string {
+func (x *GPTRequest) GetPrompt() string {
 	if x != nil {
 		return x.Prompt
 	}
 	return ""
 }
 
-func (x *SearchRequest) GetValue() int32 {
+func (x *GPTRequest) GetQuestion() string {
 	if x != nil {
-		return x.Value
+		return x.Question
+	}
+	return ""
+}
+
+func (x *GPTRequest) GetMaxToken() int32 {
+	if x != nil {
+		return x.MaxToken
 	}
 	return 0
 }
 
-type SearchResponse struct {
+type GPTResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Response      string                 `protobuf:"bytes,1,opt,name=Response,proto3" json:"Response,omitempty"`
+	Answer        string                 `protobuf:"bytes,1,opt,name=Answer,proto3" json:"Answer,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SearchResponse) Reset() {
-	*x = SearchResponse{}
+func (x *GPTResponse) Reset() {
+	*x = GPTResponse{}
 	mi := &file_proto_template_template_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SearchResponse) String() string {
+func (x *GPTResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SearchResponse) ProtoMessage() {}
+func (*GPTResponse) ProtoMessage() {}
 
-func (x *SearchResponse) ProtoReflect() protoreflect.Message {
+func (x *GPTResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_template_template_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -105,14 +113,14 @@ func (x *SearchResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SearchResponse.ProtoReflect.Descriptor instead.
-func (*SearchResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use GPTResponse.ProtoReflect.Descriptor instead.
+func (*GPTResponse) Descriptor() ([]byte, []int) {
 	return file_proto_template_template_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *SearchResponse) GetResponse() string {
+func (x *GPTResponse) GetAnswer() string {
 	if x != nil {
-		return x.Response
+		return x.Answer
 	}
 	return ""
 }
@@ -121,14 +129,16 @@ var File_proto_template_template_proto protoreflect.FileDescriptor
 
 const file_proto_template_template_proto_rawDesc = "" +
 	"\n" +
-	"\x1dproto/template/template.proto\x12\btemplate\"=\n" +
-	"\rSearchRequest\x12\x16\n" +
-	"\x06Prompt\x18\x01 \x01(\tR\x06Prompt\x12\x14\n" +
-	"\x05Value\x18\x02 \x01(\x05R\x05Value\",\n" +
-	"\x0eSearchResponse\x12\x1a\n" +
-	"\bResponse\x18\x01 \x01(\tR\bResponse2H\n" +
-	"\tMLService\x12;\n" +
-	"\x06Search\x12\x17.template.SearchRequest\x1a\x18.template.SearchResponseBOZMgithub.com/LiveisFpv/template-proto-ml-service/gen/go/proto/template;templateb\x06proto3"
+	"\x1dproto/template/template.proto\x12\btemplate\"]\n" +
+	"\n" +
+	"GPTRequest\x12\x16\n" +
+	"\x06Prompt\x18\x01 \x01(\tR\x06Prompt\x12\x1a\n" +
+	"\bQuestion\x18\x02 \x01(\tR\bQuestion\x12\x1b\n" +
+	"\tMax_token\x18\x03 \x01(\x05R\bMaxToken\"%\n" +
+	"\vGPTResponse\x12\x16\n" +
+	"\x06Answer\x18\x01 \x01(\tR\x06Answer2?\n" +
+	"\tMLService\x122\n" +
+	"\x03GPT\x12\x14.template.GPTRequest\x1a\x15.template.GPTResponseBOZMgithub.com/LiveisFpv/template-proto-ml-service/gen/go/proto/template;templateb\x06proto3"
 
 var (
 	file_proto_template_template_proto_rawDescOnce sync.Once
@@ -144,12 +154,12 @@ func file_proto_template_template_proto_rawDescGZIP() []byte {
 
 var file_proto_template_template_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_proto_template_template_proto_goTypes = []any{
-	(*SearchRequest)(nil),  // 0: template.SearchRequest
-	(*SearchResponse)(nil), // 1: template.SearchResponse
+	(*GPTRequest)(nil),  // 0: template.GPTRequest
+	(*GPTResponse)(nil), // 1: template.GPTResponse
 }
 var file_proto_template_template_proto_depIdxs = []int32{
-	0, // 0: template.MLService.Search:input_type -> template.SearchRequest
-	1, // 1: template.MLService.Search:output_type -> template.SearchResponse
+	0, // 0: template.MLService.GPT:input_type -> template.GPTRequest
+	1, // 1: template.MLService.GPT:output_type -> template.GPTResponse
 	1, // [1:2] is the sub-list for method output_type
 	0, // [0:1] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name

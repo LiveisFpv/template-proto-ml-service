@@ -19,14 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	MLService_Search_FullMethodName = "/template.MLService/Search"
+	MLService_GPT_FullMethodName = "/template.MLService/GPT"
 )
 
 // MLServiceClient is the client API for MLService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MLServiceClient interface {
-	Search(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*SearchResponse, error)
+	GPT(ctx context.Context, in *GPTRequest, opts ...grpc.CallOption) (*GPTResponse, error)
 }
 
 type mLServiceClient struct {
@@ -37,10 +37,10 @@ func NewMLServiceClient(cc grpc.ClientConnInterface) MLServiceClient {
 	return &mLServiceClient{cc}
 }
 
-func (c *mLServiceClient) Search(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*SearchResponse, error) {
+func (c *mLServiceClient) GPT(ctx context.Context, in *GPTRequest, opts ...grpc.CallOption) (*GPTResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SearchResponse)
-	err := c.cc.Invoke(ctx, MLService_Search_FullMethodName, in, out, cOpts...)
+	out := new(GPTResponse)
+	err := c.cc.Invoke(ctx, MLService_GPT_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -51,7 +51,7 @@ func (c *mLServiceClient) Search(ctx context.Context, in *SearchRequest, opts ..
 // All implementations must embed UnimplementedMLServiceServer
 // for forward compatibility.
 type MLServiceServer interface {
-	Search(context.Context, *SearchRequest) (*SearchResponse, error)
+	GPT(context.Context, *GPTRequest) (*GPTResponse, error)
 	mustEmbedUnimplementedMLServiceServer()
 }
 
@@ -62,8 +62,8 @@ type MLServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedMLServiceServer struct{}
 
-func (UnimplementedMLServiceServer) Search(context.Context, *SearchRequest) (*SearchResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Search not implemented")
+func (UnimplementedMLServiceServer) GPT(context.Context, *GPTRequest) (*GPTResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GPT not implemented")
 }
 func (UnimplementedMLServiceServer) mustEmbedUnimplementedMLServiceServer() {}
 func (UnimplementedMLServiceServer) testEmbeddedByValue()                   {}
@@ -86,20 +86,20 @@ func RegisterMLServiceServer(s grpc.ServiceRegistrar, srv MLServiceServer) {
 	s.RegisterService(&MLService_ServiceDesc, srv)
 }
 
-func _MLService_Search_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SearchRequest)
+func _MLService_GPT_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GPTRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MLServiceServer).Search(ctx, in)
+		return srv.(MLServiceServer).GPT(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: MLService_Search_FullMethodName,
+		FullMethod: MLService_GPT_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MLServiceServer).Search(ctx, req.(*SearchRequest))
+		return srv.(MLServiceServer).GPT(ctx, req.(*GPTRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -112,8 +112,8 @@ var MLService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*MLServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Search",
-			Handler:    _MLService_Search_Handler,
+			MethodName: "GPT",
+			Handler:    _MLService_GPT_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
